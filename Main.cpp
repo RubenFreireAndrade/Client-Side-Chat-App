@@ -34,10 +34,21 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	char message[100];
+	if (SDLNet_TCP_Recv(socket, message, 100) <=0)
+	{
+		std::cout << "Could not receive message" << std::endl;
+	}
+	else
+	{
+		std::cout << "Message received: " << message << std::endl;
+	}
+
 
 	std::cout << "This is Client" << std::endl;
 	system("pause");
 	
+	SDLNet_TCP_Close(socket);
 	SDLNet_Quit();
 	SDL_Quit();
 	return 0;
