@@ -10,6 +10,7 @@ TCP::~TCP()
 
 int TCP::EstablishConnection()
 {
+	std::cout << "This is Client" << std::endl;
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
 	{
 		std::cout << "SDL2 is not initialize properly" << std::endl;
@@ -44,5 +45,5 @@ int TCP::EstablishConnection()
 	{
 		std::cout << "Message received: " << message << std::endl;
 	}
-	std::cout << "This is Client" << std::endl;
+	//SDLNet_TCP_Close(socket);
 }

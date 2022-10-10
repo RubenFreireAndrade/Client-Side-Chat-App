@@ -16,4 +16,3 @@ public:
 private:
 	//std::string ipAddress = "127.0.0.1";
 };
-
