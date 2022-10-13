@@ -12,6 +12,7 @@ public:
 	Chat();
 	~Chat();
 	int DisplayChatBox();
+	void SendMessage();
 
 private:
 	std::string clientInput;

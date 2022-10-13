@@ -37,6 +37,7 @@ int TCP::EstablishConnection()
 	}
 
 	char message[100];
+	//std::string message[100];
 	if (SDLNet_TCP_Recv(socket, message, 100) <= 0)
 	{
 		std::cout << "Could not receive message" << std::endl;
