@@ -8,7 +8,8 @@ class TCP
 public:
 	TCP();
 	~TCP();
-	int EstablishConnection();
+	bool SDLInitialize();
+	bool EstablishConnection();
 
 	IPaddress ip;
 	TCPsocket socket = nullptr;

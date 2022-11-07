@@ -10,6 +10,7 @@ Chat::~Chat()
 
 int Chat::DisplayChatBox()
 {
+	tcp.SDLInitialize();
 	tcp.EstablishConnection();
 	if (!tcp.socket)
 	{
