@@ -21,7 +21,7 @@
     <ClCompile Include="TCP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Chat.cpp">
+    <ClCompile Include="App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="TCP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Chat.h">
+    <ClInclude Include="App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
