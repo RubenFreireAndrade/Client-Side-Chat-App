@@ -3,12 +3,16 @@
 #include<iostream>
 #include<SDL_net.h>
 
-#include"Chat.h"
+#include"App.h"
 
 int main(int argc, char* argv[])
 {
-	Chat chat;
-	chat.DisplayChatBox();
+	App App;
+	bool isAppRunning = true;
+	while (isAppRunning)
+	{
+		App.DisplayChatBox();
+	}
 
 	SDLNet_Quit();
 	SDL_Quit();
