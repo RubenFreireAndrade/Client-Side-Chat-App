@@ -1,6 +1,7 @@
 #pragma once
-#include<SDL.h>
 #include<string>
+#include<SDL.h>
+#include<thread>
 #include<iostream>
 #include<SDL_net.h>
 
@@ -11,11 +12,11 @@ class App
 public:
 	App();
 	~App();
-	int DisplayChatBox();
-	void SendMessage();
+	bool RunApp();
+	void ShutDown();
 
 private:
+	TCP* tcp;
 	std::string clientInput;
-	TCP tcp;
 };
 

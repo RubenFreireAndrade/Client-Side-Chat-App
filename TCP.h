@@ -1,4 +1,5 @@
 #pragma once
+#include<string>
 #include<iostream>
 #include<SDL.h>
 #include<SDL_net.h>
@@ -9,11 +10,14 @@ public:
 	TCP();
 	~TCP();
 	bool SDLInitialize();
-	bool EstablishConnection();
+	bool OpenSocket();
+	bool SendMessage(TCPsocket sock);
+	bool ReceiveMessage(TCPsocket sock);
+	void ShutDown();
 
 	IPaddress ip;
-	TCPsocket socket = nullptr;
+	TCPsocket listenSocket = nullptr;
 	const int port = 1234;
+	std::string clientInput;
 private:
-	//std::string ipAddress = "127.0.0.1";
 };

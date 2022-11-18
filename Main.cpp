@@ -7,14 +7,15 @@
 
 int main(int argc, char* argv[])
 {
-	App App;
+	App app;
 	bool isAppRunning = true;
 	while (isAppRunning)
 	{
-		App.DisplayChatBox();
+		if (!app.RunApp())
+		{
+			app.ShutDown();
+			return isAppRunning = false;
+		}
 	}
-
-	SDLNet_Quit();
-	SDL_Quit();
 	return 0;
 }

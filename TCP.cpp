@@ -14,37 +14,62 @@ bool TCP::SDLInitialize()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == -1)
 	{
 		std::cout << "SDL2 is not initialize properly" << std::endl;
-		return 0;
+		return false;
 	}
 	else if (SDLNet_Init() == -1)
 	{
 		std::cout << "SDL_net is not initialize properly" << std::endl;
-		return 0;
+		return false;
 	}
+	return true;
 }
 
-bool TCP::EstablishConnection()
+bool TCP::OpenSocket()
 {
-	if (SDLNet_ResolveHost(&ip, /*"127.0.0.1"*/"localhost", port) == -1)
+	if (SDLNet_ResolveHost(&ip, /*"127.0.0.1"*/"localhost", port) == -1) // Change localhost to user input. So user has to input an address.
 	{
 		std::cout << "Could not connect to server" << std::endl;
-		return 0;
+		return false;
 	}
 
-	socket = SDLNet_TCP_Open(&ip);
-	if (!socket)
+	listenSocket = SDLNet_TCP_Open(&ip);
+	if (!listenSocket)
 	{
 		std::cout << "Could not open socket" << std::endl;
-		return 0;
+		return false;
 	}
+	return true;
+}
 
+bool TCP::SendMessage(TCPsocket sock)
+{
+	std::cout << "Type Your Message: ";
+	std::getline(std::cin, clientInput);
+
+	int length = clientInput.length() + 1;
+	if (SDLNet_TCP_Send(sock, clientInput.c_str(), length) < length)
+	{
+		std::cout << "Message sent successfully!" << clientInput << std::endl;
+		return true;
+	}
+	std::cout << "Could not send message" << std::endl;
+	return false;
+}
+
+bool TCP::ReceiveMessage(TCPsocket sock)
+{
 	char message[100];
-	if (SDLNet_TCP_Recv(socket, message, 100) <= 0)
+	if (SDLNet_TCP_Recv(sock, message, 100) <= 0)
 	{
-		std::cout << "Could not receive message" << std::endl;
+		std::cout << "Message Received: " << message << std::endl;
+		return true;
 	}
-	else
-	{
-		std::cout << "Message received: " << message << std::endl;
-	}
+	std::cout << "Could not receive message" << std::endl;
+	return false;
+}
+
+void TCP::ShutDown()
+{
+	SDLNet_Quit();
+	SDL_Quit();
 }

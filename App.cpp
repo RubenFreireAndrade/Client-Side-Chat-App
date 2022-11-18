@@ -2,38 +2,39 @@
 
 App::App()
 {
+	tcp = new TCP();
 }
 
 App::~App()
 {
 }
 
-int App::DisplayChatBox()
+bool App::RunApp()
 {
-	tcp.SDLInitialize();
-	tcp.EstablishConnection();
-	if (!tcp.socket)
+	bool isAppRunning = true;
+
+	tcp->SDLInitialize();
+	tcp->OpenSocket();
+	while (isAppRunning)
 	{
-		return 0;
-	}
-	else
-	{
-		std::cout << "|||||||||||||||||||||||||||||||||||" << std::endl;
-		std::cout << "Type Your Message: ";
-		std::getline(std::cin, clientInput);
-		SendMessage();
+		if (tcp->listenSocket)
+		{
+			/*std::thread receiveMsgThread(&TCP::ReceiveMessage, tcp, tcp->listenSocket);
+			receiveMsgThread.join();*/
+			/*std::thread sendMsgThread(&TCP::SendMessage, tcp, tcp->listenSocket);
+			sendMsgThread.join();*/
+			tcp->ReceiveMessage(tcp->listenSocket);
+			
+			//tcp->SendMessage(tcp->listenSocket, clientInput);
+		}
+		else
+		{
+			return isAppRunning = false;
+		}
 	}
 }
 
-void App::SendMessage()
+void App::ShutDown()
 {
-	int length = clientInput.length() + 1;
-	if (SDLNet_TCP_Send(tcp.socket, clientInput.c_str(), length) < length)
-	{
-		std::cout << "Could not send message" << std::endl;
-	}
-	else
-	{
-		std::cout << "Message sent successfully! " << std::endl;
-	}
+	tcp->ShutDown();
 }
