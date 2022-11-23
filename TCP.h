@@ -14,6 +14,7 @@ public:
 	bool ListenSocket();
 	bool SendMessage(TCPsocket sock);
 	bool ReceiveMessage(TCPsocket sock);
+	bool GetMsgSentFlag();
 	void ShutDown();
 
 	IPaddress ip;
@@ -22,4 +23,5 @@ public:
 	std::string clientInput;
 private:
 	bool isListening = true;
+	bool hasSentMsg = false;
 };

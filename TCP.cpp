@@ -48,13 +48,12 @@ bool TCP::ListenSocket()
 		if (!listenSocket)
 		{
 			std::cout << "Trying to connect. . ." << std::endl;
-			// Need to keep Socket Open when there is no server to connect.
-			//OpenSocket();
 			SDL_Delay(1000);
 		}
 		else
 		{
 			std::cout << "Connected to Server" << std::endl;
+			//SendMessage(listenSocket);
 			return true;
 		}
 	}
@@ -78,13 +77,19 @@ bool TCP::SendMessage(TCPsocket sock)
 bool TCP::ReceiveMessage(TCPsocket sock)
 {
 	char message[100];
-	if (SDLNet_TCP_Recv(sock, message, 100))
+	while (SDLNet_TCP_Recv(sock, message, 100))
 	{
 		std::cout << "Message Received: " << message << std::endl;
+		hasSentMsg = true;
 		return true;
 	}
 	std::cout << "Could not receive message" << std::endl;
 	return false;
+}
+
+bool TCP::GetMsgSentFlag()
+{
+	return hasSentMsg;
 }
 
 void TCP::ShutDown()

@@ -19,7 +19,7 @@ public:
 private:
 	TCP* tcp;
 	std::string clientInput;
-	std::thread sendMsgThr;
-	std::thread receiveMsgThr;
+	//std::thread sendMsgThr;
+	//std::thread receiveMsgThr;
 };
 
