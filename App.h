@@ -12,11 +12,14 @@ class App
 public:
 	App();
 	~App();
+	bool InitApp();
 	bool RunApp();
 	void ShutDown();
 
 private:
 	TCP* tcp;
 	std::string clientInput;
+	std::thread sendMsgThr;
+	std::thread receiveMsgThr;
 };
 

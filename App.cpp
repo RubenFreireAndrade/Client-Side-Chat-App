@@ -9,29 +9,31 @@ App::~App()
 {
 }
 
+bool App::InitApp()
+{
+	if (!tcp->SDLInitialize())
+	{
+		return false;
+	}
+
+	if (!tcp->OpenSocket())
+	{
+		return false;
+	}
+	return true;
+}
+
 bool App::RunApp()
 {
-	bool isAppRunning = true;
-
-	tcp->SDLInitialize();
-	tcp->OpenSocket();
-	while (isAppRunning)
+	while (tcp->ListenSocket())
 	{
-		if (tcp->listenSocket)
-		{
-			/*std::thread receiveMsgThread(&TCP::ReceiveMessage, tcp, tcp->listenSocket);
-			receiveMsgThread.join();*/
-			/*std::thread sendMsgThread(&TCP::SendMessage, tcp, tcp->listenSocket);
-			sendMsgThread.join();*/
-			tcp->ReceiveMessage(tcp->listenSocket);
-			
-			//tcp->SendMessage(tcp->listenSocket, clientInput);
-		}
-		else
-		{
-			return isAppRunning = false;
-		}
+		receiveMsgThr = std::thread(&TCP::ReceiveMessage, tcp, tcp->listenSocket);
+		sendMsgThr = std::thread(&TCP::SendMessage, tcp, tcp->listenSocket);
+
+		receiveMsgThr.detach();
+		sendMsgThr.join();
 	}
+	return false;
 }
 
 void App::ShutDown()
