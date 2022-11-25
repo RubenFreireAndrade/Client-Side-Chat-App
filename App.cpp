@@ -29,7 +29,7 @@ bool App::RunApp()
 	{
 		std::thread receiveMsgThr(&TCP::ReceiveMessage, tcp, tcp->listenSocket);
 		receiveMsgThr.detach();
-		if (tcp->GetMsgSentFlag())
+		if (tcp->GetMsgRecvFlag())
 		{
 			std::thread sendMsgThr(&TCP::SendMessage, tcp, tcp->listenSocket);
 			sendMsgThr.join();
