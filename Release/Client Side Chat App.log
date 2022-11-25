@@ -1,0 +1,21 @@
+﻿  App.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(301,1): warning C4005: 'INADDR_ANY': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(151): message : see previous definition of 'INADDR_ANY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(303,1): warning C4005: 'INADDR_BROADCAST': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(160): message : see previous definition of 'INADDR_BROADCAST'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(304,1): warning C4005: 'INADDR_NONE': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(154): message : see previous definition of 'INADDR_NONE'
+  Main.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(301,1): warning C4005: 'INADDR_ANY': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(151): message : see previous definition of 'INADDR_ANY'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(303,1): warning C4005: 'INADDR_BROADCAST': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(160): message : see previous definition of 'INADDR_BROADCAST'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsock.h(304,1): warning C4005: 'INADDR_NONE': macro redefinition
+D:\Client-Side-Chat-App\SDLlib\include\SDL_net.h(154): message : see previous definition of 'INADDR_NONE'
+  TCP.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+D:\Client-Side-Chat-App\TCP.cpp(59): warning C4715: 'TCP::ListenSocket': not all control paths return a value
+  All 153 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Client Side Chat App.vcxproj -> D:\Client-Side-Chat-App\Release\Client Side Chat App.exe

@@ -26,7 +26,7 @@ bool TCP::SDLInitialize()
 
 bool TCP::OpenSocket()
 {
-	if (SDLNet_ResolveHost(&ip, "localhost", port) == -1) // Change localhost to user input. So user has to input an address.
+	if (SDLNet_ResolveHost(&ip, "localhost", port) == -1)
 	{
 		std::cout << "Could not connect to server" << std::endl;
 		return false;
@@ -35,7 +35,8 @@ bool TCP::OpenSocket()
 	listenSocket = SDLNet_TCP_Open(&ip);
 	if (!listenSocket)
 	{
-		std::cout << "Could not find socket" << std::endl;
+		std::cout << "Could not find server" << std::endl;
+		return false;
 	}
 	return true;
 }
@@ -48,6 +49,7 @@ bool TCP::ListenSocket()
 		{
 			std::cout << "Trying to connect. . ." << std::endl;
 			SDL_Delay(1000);
+			return false;
 		}
 		else
 		{
