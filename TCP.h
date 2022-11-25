@@ -16,17 +16,17 @@ public:
 	bool SendMessage(TCPsocket sock);
 	bool ReceiveMessage(TCPsocket sock);
 	bool GetMsgRecvFlag();
+	TCPsocket GetListenSocket();
 	void SetConsoleTextColor(WORD c);
 	void ShutDown();
 
-	IPaddress ip;
-	IPaddress* serverIp;
-	TCPsocket listenSocket = nullptr;
-	TCPsocket hostSocket = nullptr;
-	const int port = 1234;
-	std::string clientInput;
-	std::string name = "Ruben";
 private:
+	IPaddress ip;
+	const int port = 1234;
 	bool isListening = true;
 	bool hasMsgRecv = false;
+	std::string clientInput;
+	TCPsocket listenSocket = nullptr;
+
+	Uint32 GetIp(TCPsocket sock);
 };

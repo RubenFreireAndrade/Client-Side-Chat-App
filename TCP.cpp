@@ -45,8 +45,6 @@ bool TCP::ListenSocket()
 {
 	while (isListening)
 	{
-		/*TCPsocket tempSock = nullptr;
-		tempSock = SDLNet_TCP_Accept(listenSocket);*/
 		if (!listenSocket)
 		{
 			std::cout << "Trying to connect. . ." << std::endl;
@@ -54,11 +52,9 @@ bool TCP::ListenSocket()
 		}
 		else
 		{
-			/*serverIp = SDLNet_TCP_GetPeerAddress(listenSocket);
-			hostSocket = listenSocket;*/
-			SetConsoleTextColor(2);
-			std::cout << "Connected to Server: " << /*SDLNet_Read32(&serverIp->host) <<*/ std::endl;
-			SetConsoleTextColor(7);
+			this->SetConsoleTextColor(2);
+			std::cout << "Connected to Server: " << std::endl;
+			this->SetConsoleTextColor(7);
 			SDL_Delay(500);
 			return true;
 		}
@@ -68,16 +64,15 @@ bool TCP::ListenSocket()
 bool TCP::SendMessage(TCPsocket sock)
 {
 	std::cout << "Type Your Message: " << std::endl;
-	SetConsoleTextColor(3);
+	this->SetConsoleTextColor(3);
 	std::getline(std::cin, clientInput);
-	SetConsoleTextColor(7);
+	this->SetConsoleTextColor(7);
 
-	int length = clientInput.length() + 1;
-	if (SDLNet_TCP_Send(sock, clientInput.c_str(), length))
+	if (SDLNet_TCP_Send(sock, clientInput.c_str(), clientInput.length() + 1))
 	{
-		SetConsoleTextColor(6);
+		this->SetConsoleTextColor(6);
 		std::cout << "Message sent successfully!" << std::endl;
-		SetConsoleTextColor(7);
+		this->SetConsoleTextColor(7);
 		return true;
 	}
 	std::cout << "Could not send message" << std::endl;
@@ -89,9 +84,9 @@ bool TCP::ReceiveMessage(TCPsocket sock)
 	char message[100];
 	while (SDLNet_TCP_Recv(sock, message, 100))
 	{
-		SetConsoleTextColor(3);
-		std::cout << "Message Received: " << message << std::endl;
-		SetConsoleTextColor(7);
+		this->SetConsoleTextColor(3);
+		std::cout << this->GetIp(sock) << " Sent: " << message << std::endl;
+		this->SetConsoleTextColor(7);
 		hasMsgRecv = true;
 		return true;
 	}
@@ -104,9 +99,20 @@ bool TCP::GetMsgRecvFlag()
 	return hasMsgRecv;
 }
 
+TCPsocket TCP::GetListenSocket()
+{
+	return listenSocket;
+}
+
 void TCP::SetConsoleTextColor(WORD c)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+
+Uint32 TCP::GetIp(TCPsocket sock)
+{
+	IPaddress* clientIp = SDLNet_TCP_GetPeerAddress(sock);
+	return SDLNet_Read32(&clientIp->host);
 }
 
 void TCP::ShutDown()
@@ -114,3 +120,4 @@ void TCP::ShutDown()
 	SDLNet_Quit();
 	SDL_Quit();
 }
+

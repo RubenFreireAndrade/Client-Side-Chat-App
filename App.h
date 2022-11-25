@@ -18,6 +18,5 @@ public:
 
 private:
 	TCP* tcp;
-	std::string clientInput;
 };
 

@@ -27,11 +27,11 @@ bool App::RunApp()
 {
 	while (tcp->ListenSocket())
 	{
-		std::thread receiveMsgThr(&TCP::ReceiveMessage, tcp, tcp->listenSocket);
+		std::thread receiveMsgThr(&TCP::ReceiveMessage, tcp, tcp->GetListenSocket());
 		receiveMsgThr.detach();
 		if (tcp->GetMsgRecvFlag())
 		{
-			std::thread sendMsgThr(&TCP::SendMessage, tcp, tcp->listenSocket);
+			std::thread sendMsgThr(&TCP::SendMessage, tcp, tcp->GetListenSocket());
 			sendMsgThr.join();
 		}
 	}
