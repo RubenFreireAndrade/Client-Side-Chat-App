@@ -21,7 +21,7 @@ public:
 	void ShutDown();
 
 private:
-	IPaddress ip;
+	IPaddress ip{};
 	const int port = 1234;
 	bool isListening = true;
 	bool hasMsgRecv = false;
