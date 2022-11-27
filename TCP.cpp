@@ -16,7 +16,7 @@ bool TCP::SDLInitialize()
 		std::cout << "SDL2 is not initialize properly" << std::endl;
 		return false;
 	}
-	else if (SDLNet_Init() == -1)
+	else if (SDLNet_Init() == - 1)
 	{
 		std::cout << "SDL_net is not initialize properly" << std::endl;
 		return false;
@@ -26,7 +26,7 @@ bool TCP::SDLInitialize()
 
 bool TCP::OpenSocket()
 {
-	if (SDLNet_ResolveHost(&ip, "localhost", port) == -1)
+	if (SDLNet_ResolveHost(&ip, "localhost", port) == - 1)
 	{
 		std::cout << "Could not connect to server" << std::endl;
 		return false;
@@ -41,7 +41,7 @@ bool TCP::OpenSocket()
 	return true;
 }
 
-bool TCP::ListenSocket()
+int TCP::ListenSocket()
 {
 	while (isListening)
 	{
@@ -49,58 +49,54 @@ bool TCP::ListenSocket()
 		{
 			std::cout << "Trying to connect. . ." << std::endl;
 			SDL_Delay(1000);
-			return false;
 		}
 		else
 		{
-			return true;
+			clients.push_back(listenSocket);
+			int serverId = clients.size() - 1;
+			if (SendMessage(serverId))
+			{
+				this->SetConsoleTextColor(6);
+				std::cout << "Message sent successfully!" << std::endl;
+				this->SetConsoleTextColor(7);
+			}
+			return serverId;
 		}
 	}
 }
 
-bool TCP::SendMessage(TCPsocket sock)
+bool TCP::SendMessage(int serverId)
 {
-	SDL_Delay(100);
+	std::cout << "Say Something Or I'm Giving Up On You!" << std::endl;
 	std::cout << "Type Your Message: " << std::endl;
 	this->SetConsoleTextColor(3);
 	std::getline(std::cin, clientInput);
 	this->SetConsoleTextColor(7);
-	SDL_Delay(100);
 
-	if (SDLNet_TCP_Send(sock, clientInput.c_str(), clientInput.length() + 1))
+	if (SDLNet_TCP_Send(clients[serverId], clientInput.c_str(), clientInput.length() + 1))
 	{
-		SDL_Delay(100);
-		this->SetConsoleTextColor(6);
-		std::cout << "Message sent successfully!" << std::endl;
-		this->SetConsoleTextColor(7);
-		SDL_Delay(100);
 		return true;
 	}
 	std::cout << "Could not send message" << std::endl;
 	return false;
 }
 
-bool TCP::ReceiveMessage(TCPsocket sock)
+bool TCP::ReceiveMessage(int serverId)
 {
+	TCPsocket serverSock = clients[serverId];
 	char message[100];
-	while (SDLNet_TCP_Recv(sock, message, 100))
+	while (SDLNet_TCP_Recv(serverSock, message, 100))
 	{
 		SDL_Delay(100);
 		std::cout << "/ / / / / / / / / / / 'Funny Looking Chat Box' / / / / / / / / / / /" << std::endl;
 		this->SetConsoleTextColor(3);
-		std::cout << this->GetIp(sock) << " Sent: " << message << "			|" << std::endl;
+		std::cout << this->GetIp(serverSock) << " Sent: " << message << "			|" << std::endl;
 		this->SetConsoleTextColor(7);
-		hasMsgRecv = true;
 		std::cout << "/ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /" << std::endl;
 		SDL_Delay(100);
 	}
 	std::cout << "Could not receive message" << std::endl;
 	return false;
-}
-
-bool TCP::GetMsgRecvFlag()
-{
-	return hasMsgRecv;
 }
 
 TCPsocket TCP::GetListenSocket()

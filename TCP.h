@@ -1,5 +1,6 @@
 #pragma once
 #include<string>
+#include<vector>
 #include<iostream>
 #include<Windows.h>
 #include<SDL.h>
@@ -12,12 +13,11 @@ public:
 	~TCP();
 	bool SDLInitialize();
 	bool OpenSocket();
-	bool ListenSocket();
-	bool SendMessage(TCPsocket sock);
-	bool ReceiveMessage(TCPsocket sock);
-	bool GetMsgRecvFlag();
-	TCPsocket GetListenSocket();
+	int ListenSocket();
+	bool SendMessage(int clientId);
+	bool ReceiveMessage(int sock);
 	void SetConsoleTextColor(WORD c);
+	TCPsocket GetListenSocket();
 	void ShutDown();
 
 private:
@@ -26,6 +26,8 @@ private:
 	bool isListening = true;
 	bool hasMsgRecv = false;
 	std::string clientInput;
+
+	std::vector<TCPsocket> clients;
 	TCPsocket listenSocket = nullptr;
 
 	Uint32 GetIp(TCPsocket sock);

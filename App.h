@@ -18,5 +18,6 @@ public:
 
 private:
 	TCP* tcp;
+	bool isListening = true;
 };
 
